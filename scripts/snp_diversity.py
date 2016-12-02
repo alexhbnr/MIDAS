@@ -41,7 +41,7 @@ directory should be named according to a species_id and contains files 'snps_*.t
 ALL=all-sites, NC=non-coding, CDS=coding, XD=X-fold-degenerate-sites""")
 	diversity.add_argument('--weight_by_depth', action="store_true", default=False,
 		help="""weight data from samples by sequencing depth when --sample_type=pooled-samples""")
-	diversity.add_argument('--rand_reads', type=int, metavar='INT',
+	diversity.add_argument('--rand_reads', type=int, metavar='INT', default=0,
 		help="""randomly select N reads from each sample for each genomic site """)
 	diversity.add_argument('--replace_reads', action='store_true', default=False,
 		help="""reads drawn with replacement""")
@@ -160,8 +160,9 @@ def check_args(args):
 		sys.exit("\nError: --site_prev must be between 0 and 1\n")
 	if not 0 <= args['fract_cov'] <= 1:
 		sys.exit("\nError: --fract_cov must be between 0 and 1\n")
-	if args['rand_reads'] > args['site_depth'] and not args['replace_reads']:
-		sys.exit("\nError: --rand_reads cannot exceed --site_depth when --replace_reads=False\n")
+	if args['rand_reads']:
+		if args['rand_reads'] > args['site_depth'] and not args['replace_reads']:
+			sys.exit("\nError: --rand_reads cannot exceed --site_depth when --replace_reads=False\n")
 	if args['rand_sites'] and (args['rand_sites'] < 0 or args['rand_sites'] > 1):
 		sys.exit("\nError: --rand_sites must be between 0 and 1\n")
 	if 'NC' in args['site_type'] and args['genomic_type'] == 'per-gene':

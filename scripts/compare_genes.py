@@ -103,15 +103,15 @@ if __name__ == '__main__':
 	
 	args = parse_arguments()
 	
-	print ("Reading gene copy-number matrix\n")
+	print("Reading gene copy-number matrix\n")
 	usecols = range(args['max_samples']+1) if args['max_samples'] else None
 	data = pd.read_table(args['copynum'], index_col='gene_id', nrows=args['max_genes'], usecols=usecols )
 	
 	if args['dtype'] == 'presabs':
-		print ("Converting to gene presence-absence matrix\n")
+		print("Converting to gene presence-absence matrix\n")
 		data = data.applymap(cast_presabs)
 	
-	print ("Computing distances between sample pairs\n")
+	print("Computing distances between sample pairs\n")
 	# setup output file
 	outfile = open(args['out'], 'w')
 	fields = ['sample1', 'sample2', 'count1', 'count2', 'count_both', 'count_either', 'distance']
@@ -138,10 +138,10 @@ if __name__ == '__main__':
 		if args['distance'] == 'jaccard':
 			distance = 1-(float(count_both)/count_either) if count_either > 0 else 0
 		elif args['distance'] == 'euclidean':
-			print 1
+			print(1)
 			distance = compute_euclidian(data, sample1, sample2)
 		else:
-			print 2
+			print(2)
 			distance = compute_manhattan(data, sample1, sample2)
 		
 		# write stats

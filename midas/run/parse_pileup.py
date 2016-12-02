@@ -60,7 +60,7 @@ class Pileup:
 		return ','.join([str(self.counts[_]) for _ in list('ATCG')])
 
 def main(pileup_path):
-	pileup_file = gzip.open(pileup_path)
+	pileup_file = gzip.open(pileup_path, "rt")
 	fnames =['ref_id', 'ref_pos', 'ref_allele', 'depth', 'pileup', 'qualities']
 	pileup_reader = csv.reader(pileup_file, delimiter='\t')
 	for row in pileup_reader:

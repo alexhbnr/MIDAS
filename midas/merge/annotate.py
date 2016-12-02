@@ -131,7 +131,7 @@ def annotate_site(site, genes, gene_index, contigs):
 				for allele in ['A','T','C','G']: # + strand
 					alt_aa = site.amino_acids[allele]
 					site.snp_types[allele] = 'SYN' if alt_aa == site.ref_aa else 'NS'
-				site.site_type = str(site.snp_types.values().count('SYN'))+'D'
+				site.site_type = str(list(site.snp_types.values()).count('SYN'))+'D'
 			return
 
 

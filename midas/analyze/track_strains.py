@@ -109,7 +109,7 @@ def call_markers(species, samples, args):
 		
 		# skip sites not in marker list
 		if (site.ref_id != marker['ref_id']
-				or site.ref_pos < marker['ref_pos']):
+				or int(site.ref_pos) < marker['ref_pos']):
 			continue
 			
 		# determine if marker present in each sample

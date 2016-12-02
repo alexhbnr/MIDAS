@@ -7,7 +7,8 @@
 import sys, os, subprocess, shutil, csv
 from time import time
 from midas import utility
-import parse_pileup, Bio.SeqIO
+from midas.run import parse_pileup
+import Bio.SeqIO
 
 def build_genome_db(args, species):
 	""" Build FASTA and BT2 database of representative genomes """
