@@ -41,7 +41,7 @@ directory should be named according to a species_id and contains files 'snps_*.t
 ALL=all-sites, NC=non-coding, CDS=coding, XD=X-fold-degenerate-sites""")
 	diversity.add_argument('--weight_by_depth', action="store_true", default=False,
 		help="""weight data from samples by sequencing depth when --sample_type=pooled-samples""")
-	diversity.add_argument('--rand_reads', type=int, metavar='INT', default=0,
+	diversity.add_argument('--rand_reads', type=int, metavar='INT',
 		help="""randomly select N reads from each sample for each genomic site """)
 	diversity.add_argument('--replace_reads', action='store_true', default=False,
 		help="""reads drawn with replacement""")
