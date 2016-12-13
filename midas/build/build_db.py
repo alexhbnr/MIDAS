@@ -248,11 +248,11 @@ def read_species(args):
 		sp.ngenomes = len(sp.genomes)
 		# make sure at least 1 rep genome/species
 		if sp.rep_genome is None:
-			sp.rep_genome = sp.genomes.keys()[0]
+			sp.rep_genome = list(sp.genomes.keys())[0]
 	return species.values()
 
 def read_genomes(species):
-	genomes = sum([sp.genomes.values() for sp in species], [])
+	genomes = sum([list(sp.genomes.values()) for sp in species], [])
 	return genomes
 
 def build_repgenome_db(args, genomes, species):

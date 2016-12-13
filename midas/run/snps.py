@@ -4,7 +4,7 @@
 # Copyright (C) 2015 Stephen Nayfach
 # Freely distributed under the GNU General Public License (GPLv3)
 
-import sys, os, subprocess, shutil, csv
+import sys, os, subprocess, shutil, csv, re
 from time import time
 from midas import utility
 from midas.run import parse_pileup
@@ -97,6 +97,16 @@ def write_present(outfile, pileup):
 			  pileup.allele_string()]
 	outfile.write('\t'.join(values)+'\n')
 
+def atoi(text):
+	""" Returns a number as integer """
+	return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+	""" Provides keys for natural/human sorting following
+	    http://stackoverflow.com/questions/5967500/how-to-correctly-sort-a-string-with-a-number-inside
+	"""
+	return [atoi(c) for c in re.split('(\d+)', text)]
+
 def format_pileup(args, species, contigs):
 	""" Parse mpileups and fill in missing positions """
 
@@ -105,7 +115,8 @@ def format_pileup(args, species, contigs):
 		sp.out = utility.iopen('/'.join([args['outdir'], 'snps/output/%s.snps.gz' % sp.id]), 'w')
 		header = ['ref_id', 'ref_pos', 'ref_allele', 'alt_allele', 'ref_freq', 'depth', 'count_atcg']
 		sp.out.write('\t'.join(header)+'\n')
-		sp.contigs = sorted([c.id for c in contigs.values() if c.species_id == sp.id])
+		sp.contigs = sorted([c.id for c in contigs.values() if c.species_id == sp.id],
+		                    key=natural_keys)
 		sp.i = 0 # contig index
 		sp.j = 0 # position index
 		
